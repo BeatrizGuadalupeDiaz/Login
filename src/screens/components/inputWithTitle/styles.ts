@@ -4,9 +4,9 @@ export const styles  = StyleSheet.create({
     container: {
         flexDirection: 'row',
         gap: 10,
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         padding: 5,
+        width: '70%',
     },
     textInput: {
         borderWidth: 1,

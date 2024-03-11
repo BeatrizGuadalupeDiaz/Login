@@ -1,5 +1,5 @@
 import { View, Text, TextInput, TextInputProps } from "react-native";
-import { Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { styles } from "./styles";
 import { InputWithTitleProps } from "./types";
 
@@ -8,6 +8,7 @@ export const Input = ({
   name,
   title,
   placeholder,
+  rules = {},
   secureTextEntry,
 }: TextInputProps & InputWithTitleProps) => {
   return (
@@ -16,15 +17,24 @@ export const Input = ({
       <Controller
         control={control}
         name={name}
-        render={({ field: { value, onChange, onBlur } }) => (
-          <TextInput
-            value={value}
-            onChangeText={onChange}
-            placeholder={placeholder}
-            onBlur={onBlur}
-            secureTextEntry={secureTextEntry}
-            style={styles.textInput}
-          />
+        rules={rules}
+        render={({
+          field: { value, onChange, onBlur },
+          fieldState: { error },
+        }) => (
+          <View style={{ flexDirection: "column" }}>
+            <TextInput
+              value={value}
+              onChangeText={onChange}
+              placeholder={placeholder}
+              onBlur={onBlur}
+              secureTextEntry={secureTextEntry}
+              style={[styles.textInput, { borderColor: error && "red" }]}
+            />
+            {error && (
+              <Text style={{ color: "red" }}>{error.message || "Error"}</Text>
+            )}
+          </View>
         )}
       />
     </View>
